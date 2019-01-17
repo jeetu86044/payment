@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose your Card</title>
+</head>
+<body>
+<form method="post">
+<tr th:each="option: ${cardTypes}">
+    <h3> <input type="radio" name="paymentOptionOpt" th:value="${option.name}" > <td th:text="${option.name}" /> </h3>
+    <br><br>
+</tr>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>

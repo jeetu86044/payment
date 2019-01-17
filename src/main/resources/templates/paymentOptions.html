@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Front Page</title>
+</head>
+<body>
+
+<form method="post">
+    <h2>Choose your payment option</h2>
+    <tr th:each="option: ${options}">
+        <input type="radio" name="paymentOptionOpt" th:value="${option.name}" > <td th:text="${option.name}" />
+        <br><br>
+    </tr>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
