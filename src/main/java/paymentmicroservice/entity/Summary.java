@@ -2,30 +2,33 @@ package paymentmicroservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Summary {
     @Id
-    private int cartId;
+    private String orderId;
     private String modOfPayment;
     private String transactionId;
     private boolean isSuccess;
     private float amount;
+    private Date date;
     public  Summary(){}
-    public Summary(int cartId, String modOfPayment, String transactionId, boolean isSuccess, float amount) {
-        this.cartId = cartId;
+    public Summary(String orderId, String modOfPayment, String transactionId, boolean isSuccess, float amount, Date date) {
+        this.orderId = orderId;
         this.modOfPayment = modOfPayment;
         this.transactionId = transactionId;
         this.isSuccess = isSuccess;
         this.amount = amount;
+        this.date = date;
     }
 
-    public int getCartId() {
-        return cartId;
+    public String getorderId() {
+        return orderId;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public void setorderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getModOfPayment() {
@@ -36,9 +39,18 @@ public class Summary {
         this.modOfPayment = modOfPayment;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getTransactionId() {
         return transactionId;
     }
+
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;

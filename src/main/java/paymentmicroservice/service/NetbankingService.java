@@ -14,14 +14,8 @@ public class NetbankingService {
 
     @Autowired
     NetbankingRepo netbankingRepo;
-    public List<Netbanking> getBanks()
+    public List<String> getBanks()
     {
-        List<Netbanking> bankList=new ArrayList<>();
-        Iterator iterator = netbankingRepo.findAll().iterator();
-        while(iterator.hasNext())
-        {
-            bankList.add((Netbanking)iterator.next());
-        }
-        return bankList;
+        return netbankingRepo.getAllBankS();
     }
 }

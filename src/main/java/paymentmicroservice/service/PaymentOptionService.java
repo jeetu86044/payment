@@ -1,9 +1,9 @@
 package paymentmicroservice.service;
 
+import com.sun.org.apache.xerces.internal.xs.StringList;
+import org.hibernate.cfg.FkSecondPass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.view.RedirectView;
-import paymentmicroservice.controller.PaymentController;
 import paymentmicroservice.entity.PaymentOption;
 import paymentmicroservice.entity.Summary;
 import paymentmicroservice.repository.PaymentOptionRepo;
@@ -15,51 +15,43 @@ public class PaymentOptionService {
     @Autowired
     PaymentOptionRepo paymentOptionRepo;
 
-    public List<PaymentOption> paymentInit()
+    public List<String> getPaymentOption()
     {
-        Iterator iterator = paymentOptionRepo.findAll().iterator();
-        List<PaymentOption> paymentOptionList = new ArrayList<>();
-        while(iterator.hasNext())
-        {
-            paymentOptionList.add((PaymentOption) iterator.next());
-        }
-        return  paymentOptionList;
+        return paymentOptionRepo.getOptions();
     }
 
     public String getOption(Summary paymentInfo, Map<String,String> mp)
     {
-        String url ;
-        String paymentOptionOpt;
+        String paymentOptionOpt="Something Wrong";
+
         try{
             paymentOptionOpt = mp.get("paymentOptionOpt");
             paymentInfo.setModOfPayment(paymentOptionOpt);
-            if(paymentOptionOpt.equalsIgnoreCase("NetBanking"))
-                url ="/payment/netbanking";
-            else if(paymentOptionOpt.equalsIgnoreCase("Debit Card"))
-                url = "/payment/debitcard";
-            else
-                url  = "/payment/pay";
+
+
         }
         catch (Exception e)
         {
-            url = "/errors";
+           return paymentOptionOpt;
         }
 
-        return  url;
+        return  paymentOptionOpt;
     }
 
-    public String getCartInfo(Summary paymentInfo,Map<String,String>mp)
+    public Object getCartInfo(Summary paymentInfo,Map<String,Object>mp)
     {
         String url;
+
         try {
-             paymentInfo.setCartId(Integer.parseInt(mp.get("cartid")));
-             paymentInfo.setAmount(Float.parseFloat(mp.get("amount")));
-            url="/payment/init";
+             paymentInfo.setorderId((String)mp.get("orderId"));
+             paymentInfo.setAmount(Float.parseFloat((String)  mp.get("amount")));
+             List<String> list=(List<String>) mp.get("items");
+             return list.get(1);
         }
         catch (Exception e)
         {
-            url="/errors";
+           return e;
         }
-        return url;
+      // return "fghj";
     }
 }

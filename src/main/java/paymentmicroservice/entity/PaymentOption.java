@@ -9,11 +9,22 @@ public class PaymentOption {
     private int id;
 
     private String name;
+    private boolean isActive;
 
     public  PaymentOption(){}
-    public PaymentOption(int id, String name) {
+
+    public PaymentOption(int id, String name, boolean isActive) {
         this.id = id;
         this.name = name;
+        this.isActive = isActive;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public int getId() {

@@ -10,11 +10,14 @@ public class Netbanking {
     private int id;
 
     private String name;
+    private boolean isActive;
 
     public  Netbanking(){}
-    public Netbanking(int id, String name) {
+
+    public Netbanking(int id, String name, boolean isActive) {
         this.id = id;
         this.name = name;
+        this.isActive = isActive;
     }
 
     public int getId() {
@@ -27,6 +30,14 @@ public class Netbanking {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public void setName(String name) {
