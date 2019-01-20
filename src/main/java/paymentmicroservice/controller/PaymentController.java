@@ -42,7 +42,7 @@ public class PaymentController {
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/payment/init")
-    public String paymentInitPost(@RequestParam Map<String,String>mp){
+    public String paymentInitPost(@RequestBody Map<String,String>mp){
         return paymentOptionService.getOption(paymentInfo,mp);
     }
 
@@ -60,7 +60,7 @@ public class PaymentController {
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/payment/pay")
-    public Summary finalPayPost(@RequestParam Map<String,String>mp)
+    public Summary finalPayPost(@RequestBody Map<String,String>mp)
     {
         summaryService.getInfo(paymentInfo,mp);
         return paymentInfo;
