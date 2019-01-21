@@ -2,9 +2,6 @@ package paymentmicroservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import paymentmicroservice.entity.DebitCard;
-import paymentmicroservice.entity.Netbanking;
-import paymentmicroservice.entity.PaymentOption;
 import paymentmicroservice.entity.Summary;
 import paymentmicroservice.service.DebitCardService;
 import paymentmicroservice.service.NetbankingService;
@@ -15,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class PaymentController {
+public class PaymentController  {
      Summary paymentInfo;
 
     @Autowired
@@ -27,22 +24,22 @@ public class PaymentController {
     @Autowired
     SummaryService summaryService;
 
-
     @RequestMapping(method = RequestMethod.POST,value = "/checkout")
-    public Object checkOutPost(@RequestBody Map<String,Object>mp)
+    public void checkOutPost(@RequestBody Map<String,Object>mp) throws CustomException
     {
        paymentInfo = new Summary();
-      return paymentOptionService.getCartInfo(paymentInfo,mp);
+       paymentOptionService.getCartInfo(paymentInfo,mp);
     }
 
 
     @RequestMapping(method = RequestMethod.GET,value = "/payment/init")
-    public List<String> paymentInit(){
-        return paymentOptionService.getPaymentOption();
+    public List<String> paymentInit() throws CustomException
+    {
+        return paymentOptionService.getPaymentOption(paymentInfo);
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/payment/init")
-    public String paymentInitPost(@RequestBody Map<String,String>mp){
+    public String paymentInitPost(@RequestBody Map<String,String>mp)throws CustomException{
         return paymentOptionService.getOption(paymentInfo,mp);
     }
 
@@ -60,17 +57,12 @@ public class PaymentController {
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/payment/pay")
-    public Summary finalPayPost(@RequestBody Map<String,String>mp)
+    public Summary finalPayPost(@RequestBody Map<String,String>mp) throws CustomException
     {
         summaryService.getInfo(paymentInfo,mp);
         return paymentInfo;
     }
 
-    @RequestMapping("/errors")
-    public String errors()
-    {
-        return "Something went wrong";
-    }
 
 
 

@@ -1,4 +1,9 @@
 package paymentmicroservice.controller;
 
-public class CustomException {
+public class CustomException extends Exception {
+
+    public CustomException(String s)
+    {
+        super(s);
+    }
 }
