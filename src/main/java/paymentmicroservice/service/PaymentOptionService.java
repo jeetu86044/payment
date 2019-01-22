@@ -1,11 +1,8 @@
 package paymentmicroservice.service;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
-import org.hibernate.cfg.FkSecondPass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import paymentmicroservice.controller.CustomException;
-import paymentmicroservice.entity.PaymentOption;
 import paymentmicroservice.entity.Summary;
 import paymentmicroservice.repository.PaymentOptionRepo;
 
@@ -15,6 +12,9 @@ import java.util.*;
 public class  PaymentOptionService {
     @Autowired
     PaymentOptionRepo paymentOptionRepo;
+
+    @Autowired
+    SummaryService summaryService;
     List<String> paymentOptionAvailable;
 
     List<String> itemsCategory ;
@@ -40,8 +40,7 @@ public class  PaymentOptionService {
 
     public String getOption(Summary paymentInfo, Map<String,String> mp) throws CustomException
     {
-        String paymentOptionOpt="Something Wrong";
-
+        String paymentOptionOpt;
         try
         {
             paymentOptionOpt = mp.get("paymentOptionOpt");
@@ -51,22 +50,26 @@ public class  PaymentOptionService {
         }
         catch (Exception e)
         {
-           throw  new CustomException("Something Went Wrong");
+           throw  new CustomException(""+e);
         }
-
         return  paymentOptionOpt;
     }
 
     public void getCartInfo(Summary paymentInfo,Map<String,Object>mp) throws CustomException
     {
         try {
+             if(summaryService.IsOrderPresent((String)mp.get("orderId")))
+                 throw  new CustomException("Payment has already Initiated for this OrderId");
              paymentInfo.setorderId((String)mp.get("orderId"));
-             paymentInfo.setAmount(Float.parseFloat((String)  mp.get("amount")));
+             float amount = Float.parseFloat((String)  mp.get("amount"));
+             if(amount<0)
+                 throw new CustomException("Amount Can't be less than Zero");
+             paymentInfo.setAmount(amount);
              itemsCategory=(List<String>) mp.get("items");
         }
         catch (Exception e)
         {
-            throw new CustomException("Something Went Wrong");
+            throw new CustomException(""+e);
 
         }
     }

@@ -46,6 +46,10 @@ public class PaymentController  {
     @RequestMapping(method = RequestMethod.GET,value = "/payment/debitcard")
     public  List<String> debitCardList() { return debitCardService.cardList(); }
 
+   @RequestMapping(method = RequestMethod.POST,value = "/payment/debitcard")
+    public  String getCardDetails(@RequestBody Map<String,String> mp ) {
+        return  debitCardService.isDebitCardValid(mp);
+    }
 
 
 

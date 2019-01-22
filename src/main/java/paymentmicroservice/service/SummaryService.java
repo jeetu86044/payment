@@ -16,16 +16,15 @@ public class SummaryService {
 
     @Autowired
     SummaryRepo summaryRepo;
-    public boolean save(Summary summary)
+    public void save(Summary summary) throws CustomException
     {
         try {
             summaryRepo.save(summary);
         }
         catch (Exception e)
         {
-            return false;
+           throw new CustomException("Please rec try");
         }
-        return true;
     }
     public void getInfo(Summary paymentInfo, Map<String,String>mp) throws CustomException
     {
@@ -48,5 +47,14 @@ public class SummaryService {
         {
             throw new CustomException("Something Went Wrong");
         }
+    }
+
+    public boolean IsOrderPresent(String orderId)
+    {
+        Optional op = summaryRepo.findById(orderId);
+        if(op.isPresent())
+            return true;
+        else
+            return  false;
     }
 }
